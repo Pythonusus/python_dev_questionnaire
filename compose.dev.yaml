@@ -1,0 +1,17 @@
+# Development-specific overrides
+services:
+  web:
+    image: python-dev-questionnaire-development
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./python_dev_questionnaire:/home/nonroot-user/app/python_dev_questionnaire
+      - ./manage.py:/home/nonroot-user/app/manage.py
+      - ./pyproject.toml:/home/nonroot-user/app/pyproject.toml
+      - ./uv.lock:/home/nonroot-user/app/uv.lock
+      - ./Makefile:/home/nonroot-user/app/Makefile
+      - ./staticfiles:/home/nonroot-user/app/staticfiles
+    environment:
+      - DEBUG=True
+      - TARGET=development

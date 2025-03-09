@@ -1,0 +1,102 @@
+[project]
+name = "python-dev-questionnaire"
+version = "0.1.0"
+description = "A collection of python developer interview questions"
+readme = "README.md"
+authors = [
+    {name = "Petr Malafeev", email = "malafeevpa@yandex.ru"},
+]
+
+requires-python = ">=3.13"
+dependencies = [
+    "dj-database-url>=2.3.0",
+    "django>=5.1.6",
+    "django-bootstrap5>=25.1",
+    "django-extensions>=3.2.3",
+    "django-filter>=25.1",
+    "gunicorn>=23.0.0",
+    "psycopg2-binary>=2.9.10",
+    "python-dotenv>=1.0.1",
+    "whitenoise>=6.9.0",
+]
+
+[dependency-groups]
+dev = [
+    "django-debug-toolbar>=5.0.1",
+    "factory-boy>=3.3.3",
+    "pre-commit>=4.1.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
+    "pytest-django>=4.10.0",
+    "ruff>=0.9.9",
+]
+
+[project.urls]
+repository = "https://github.com/Pythonusus/python_dev_questionnaire.git"
+
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "python_dev_questionnaire.settings"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning"
+]
+factoryboy_modules = [
+    "python_dev_questionnaire.tests.factories"
+]
+addopts = []
+
+[tool.pytest.ini_options.coverage]
+addopts = [
+    "--cov=.",
+    "--cov-report=html",
+    "--cov-report=xml",
+    "--cov-report=term-missing",
+    "--no-cov-on-fail"
+]
+
+[tool.coverage.run]
+    source = ["python-dev-questionnaire"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/venv/*",
+    "manage.py",
+    "*/settings.py",
+    "*/urls.py",
+    "*/admin.py",
+    "*/apps.py",
+    "*/__init__.py",
+    "*/asgi.py",
+    "*/wsgi.py"
+]
+
+[tool.ruff]
+line-length = 79
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "*.pyc",
+    "tests/*",
+    "__init__.py",
+    "asgi.py",
+    "wsgi.py",
+    "*/migrations/*",
+]
+
+[tool.ruff.lint]
+preview = true
+select = ["A", "E", "F", "W", "I", "C90", "RET"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"] # ignore unused imports for __init__.py
+"settings.py" = ["E501"] # ignore line length for settings.py
+
+[tool.ruff.format]
+quote-style = "preserve"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

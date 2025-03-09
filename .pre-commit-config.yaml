@@ -1,0 +1,22 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff check
+        entry: make lint
+        language: system
+        types: [python]
+
+      - id: pytest
+        name: Run tests
+        entry: make test
+        language: system
+        types: [python]
+        pass_filenames: false
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: debug-statements
+      - id: check-case-conflict
+      - id: check-merge-conflict
