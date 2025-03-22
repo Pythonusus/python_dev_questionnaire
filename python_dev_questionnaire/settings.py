@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'django_filters',
     'python_dev_questionnaire',
+    'python_dev_questionnaire.questions',
+    'python_dev_questionnaire.categories',
+    'python_dev_questionnaire.labels',
 ]
 
 MIDDLEWARE = [
