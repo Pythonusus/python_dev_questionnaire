@@ -1,0 +1,13 @@
+{% extends "layouts/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <div class="container py-5">
+    <h1 class="display-6 mb-4">Вход в систему</h1>
+    <form class="form" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% bootstrap_button button_type="submit" content="Войти" %}
+    </form>
+  </div>
+{% endblock content %}

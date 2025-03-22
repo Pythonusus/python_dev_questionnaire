@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+  <div class="container d-flex flex-column align-items-center">
+    <h1 class="display-3 mb-4">404 страница не найдена</h1>
+    <img src="{% static 'error_images/404.png' %}"
+         alt="404 image"
+         class="img-fluid w-25"
+         width="300"
+         height="300">
+    <p class="lead mt-4">{{ error_message }}</p>
+  </div>
+{% endblock content %}

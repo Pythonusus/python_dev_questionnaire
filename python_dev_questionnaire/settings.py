@@ -54,6 +54,10 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'django_filters',
     'python_dev_questionnaire',
+    'python_dev_questionnaire.users',
+    'python_dev_questionnaire.questions',
+    'python_dev_questionnaire.categories',
+    'python_dev_questionnaire.labels',
 ]
 
 MIDDLEWARE = [
@@ -138,6 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

@@ -1,0 +1,58 @@
+{% load static %}
+<header class="flex-shrink-0 header-bg">
+  <nav>
+    <ul class="nav flex-row">
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center link-opacity-50-hover"
+           href="{% url 'index' %}">
+          <img src="{% static 'logo.png' %}" alt="logo" width="80" height="80">
+          <span class="fs-4 fw-bold text-nowrap ms-3">Главная</span>
+        </a>
+      </li>
+      <li class="nav-item d-flex align-items-center">
+        <a class="nav-link link-opacity-50-hover"
+           href="{% url 'questions_index' %}">
+          <span class="fs-4 fw-bold text-nowrap">База вопросов</span>
+        </a>
+      </li>
+      <li class="nav-item d-flex align-items-center">
+        <a class="nav-link link-opacity-50-hover" href="{% url 'materials' %}">
+          <span class="fs-4 fw-bold text-nowrap">Материалы</span>
+        </a>
+      </li>
+      <li class="nav-item ms-auto d-flex align-items-center">
+        <a class="nav-link link-opacity-50-hover" href="{% url 'about' %}">
+          <span class="fs-4 fw-bold text-nowrap">О проекте</span>
+        </a>
+      </li>
+      {% if user.is_authenticated %}
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link link-opacity-50-hover"
+             href="{% url 'users_profile' username=user.username %}">
+            <span class="fs-4 fw-bold text-nowrap">Профиль</span>
+          </a>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <form method="post" action="{% url 'logout' %}" class="m-0">
+            {% csrf_token %}
+            <button type="submit"
+                    class="nav-link link-opacity-50-hover border-0 bg-transparent">
+              <span class="fs-4 fw-bold text-nowrap">Выход</span>
+            </button>
+          </form>
+        </li>
+      {% else %}
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link link-opacity-50-hover" href="{% url 'login' %}">
+            <span class="fs-4 fw-bold text-nowrap">Вход</span>
+          </a>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link link-opacity-50-hover" href="{% url 'users_register' %}">
+            <span class="fs-4 fw-bold text-nowrap">Регистрация</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+</header>

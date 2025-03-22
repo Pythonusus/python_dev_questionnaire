@@ -22,8 +22,22 @@ from python_dev_questionnaire import views
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
+    path('set_theme/<str:theme>/', views.set_theme, name='set_theme'),
+    path('questions/', include('python_dev_questionnaire.questions.urls')),
+    path('materials/', views.MaterialsView.as_view(), name='materials'),
+    path('about/', views.AboutView.as_view(), name='about'),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('logout/', views.CustomLogoutView.as_view(), name='logout'),
+    path('users/', include('python_dev_questionnaire.users.urls')),
     path('admin/', admin.site.urls),
 ]
+
+
+# Error handlers
+# Work only in DEBUG=False
+handler404 = views.error_404_view
+handler500 = views.error_500_view
+
 
 if settings.DEBUG:
     debug_urlpatterns = []

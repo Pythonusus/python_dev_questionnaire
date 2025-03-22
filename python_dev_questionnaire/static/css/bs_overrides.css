@@ -1,0 +1,22 @@
+[data-bs-theme="light"] {
+  /* Light theme variables */
+  --bs-body-color: #212529;
+  --bs-body-bg: #f8f4f4;
+  --bs-link-color: #212529;
+  --bs-link-hover-color: rgba(21, 25, 29, 0.6);
+  --header-bg: #dddddd;
+}
+
+[data-bs-theme="dark"] {
+  /* Dark theme variables */
+  --bs-body-color: #c7c7c7;
+  --bs-body-bg: #212529;
+  --bs-link-color: #c7c7c7;
+  --bs-link-hover-color: rgba(207, 207, 207, 0.6);
+  --header-bg: #0d0d0e;
+}
+
+.header-bg {
+  background-color: var(--header-bg);
+}
+
