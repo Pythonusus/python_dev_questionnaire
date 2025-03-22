@@ -21,9 +21,26 @@ from django.urls import include, path
 from python_dev_questionnaire import views
 
 urlpatterns = [
+    path('set_theme/<str:theme>/', views.set_theme, name='set_theme'),
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path(
+        'profile/<int:pk>/', views.ProfileView.as_view(), name='profile'
+    ),
+    path('about/', views.AboutView.as_view(), name='about'),
+    path('materials/', views.MaterialsView.as_view(), name='materials'),
+    path('questions/', include('python_dev_questionnaire.questions.urls')),
     path('', views.IndexView.as_view(), name='index'),
     path('admin/', admin.site.urls),
 ]
+
+
+# Error handlers
+# Work only in DEBUG=False
+handler404 = views.error_404_view
+# handler500 = views.error_500_view
+
 
 if settings.DEBUG:
     debug_urlpatterns = []
