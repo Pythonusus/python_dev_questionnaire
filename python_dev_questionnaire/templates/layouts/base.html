@@ -1,0 +1,43 @@
+{% load django_bootstrap5 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru-ru"
+      data-bs-theme="{{ request.COOKIES.django_theme|default:'light' }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Python, developer, interview, questions, study, learn, prepare">
+    <meta name="description" content="Python Dev Questionnaire">
+    <title>Python Dev Questionnaire</title>
+    <link rel="icon"
+          href="{% static 'logo.png' %}"
+          type="image/png"
+          sizes="64x64">
+    <!-- Styles -->
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/bs_overrides.css' %}">
+  </head>
+
+  <body class="min-vh-100 d-flex flex-column">
+
+    <!-- Header -->
+    {% include "layouts/header.html" %}
+
+    <!-- Messages -->
+    {% bootstrap_messages %}
+
+    <!-- Main content -->
+    <main class="flex-grow-1">
+      <div class="container-lg mt-3">
+        {% block content %}
+        {% endblock content %}
+      </div>
+    </main>
+
+    <!-- Footer -->
+    {% include "layouts/footer.html" %}
+
+    <!-- Scripts -->
+    {% bootstrap_javascript %}
+  </body>
+</html>

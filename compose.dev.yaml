@@ -1,0 +1,32 @@
+# Development environment specific overrides
+services:
+  web:
+    image: python-dev-questionnaire-development
+    build:
+      context: .
+      target: development
+    environment:
+      - DEBUG=True
+      - TARGET=development
+    volumes:
+      - ./python_dev_questionnaire:/home/nonroot-user/python_dev_questionnaire/python_dev_questionnaire
+      - ./docker-entrypoint-dev.sh:/home/nonroot-user/python_dev_questionnaire/docker-entrypoint-dev.sh
+      - ./staticfiles:/home/nonroot-user/python_dev_questionnaire/staticfiles
+      - ./Makefile:/home/nonroot-user/python_dev_questionnaire/Makefile
+      - ./manage.py:/home/nonroot-user/python_dev_questionnaire/manage.py
+      - ./pyproject.toml:/home/nonroot-user/python_dev_questionnaire/pyproject.toml
+      - ./uv.lock:/home/nonroot-user/python_dev_questionnaire/uv.lock
+      - ./README.md:/home/nonroot-user/python_dev_questionnaire/README.md
+      - ./coverage:/home/nonroot-user/python_dev_questionnaire/coverage
+      - venv_data:/home/nonroot-user/python_dev_questionnaire/.venv
+
+# Making database available outside the container for development on port 5432.
+# In production it's available only inside the container via docker-compose network.
+  db:
+    ports:
+      - "5432:5432"
+
+# Volume for storing .venv directory from container.
+# It is separated from host machine .venv but persistent across container restarts.
+volumes:
+  venv_data:

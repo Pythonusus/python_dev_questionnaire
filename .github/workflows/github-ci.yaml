@@ -1,0 +1,65 @@
+name: GitHub CI
+
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
+
+env:
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+  DATABASE_URL: postgres://postgres:postgres@db:5432/test_db
+  POSTGRES_DB: test_db
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  DJANGO_SUPERUSER_USERNAME: admin
+  DJANGO_SUPERUSER_EMAIL: admin@example.com
+  DJANGO_SUPERUSER_PASSWORD: admin
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+      - name: Build Docker images
+        run: |
+          make docker-build-dev
+
+      - name: Start Docker containers
+        run: |
+          docker compose -f compose.yaml -f compose.dev.yaml up -d
+
+      - name: Run linters
+        run: |
+          make lint
+          make lint-html
+
+      - name: Run tests and generate coverage report
+        run: |
+          make docker-test-cov-ci
+
+      - name: Fix paths in coverage report
+        # This step is needed because coverage report is generated in the container
+        # and we need to fix the paths to the source code in the report wich should
+        # be the root of the repository.
+        run: |
+          sed -i 's|/home/nonroot-user/python_dev_questionnaire|${{ github.workspace }}|g' coverage/coverage.xml
+
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v5.0.0
+        if: github.ref_name == 'main'
+        with:
+          coverageCommand: echo "Coverage files already generated"
+          coverageLocations: |
+            ${{github.workspace}}/coverage/coverage.xml:coverage.py
+          debug: true
+          prefix: ${{ github.workspace }}
+
+      - name: Stop Docker containers
+        run: |
+          make docker-down
