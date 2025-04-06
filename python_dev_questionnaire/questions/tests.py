@@ -159,7 +159,14 @@ class TestQuestionDetailPage:
         response = client.get(
             reverse_lazy('question_detail', args=[question.id])
         )
+        content = response.content.decode()
         assert response.status_code == 200
         assert 'questions/question_detail.html' in [
             t.name for t in response.templates
         ]
+        assert question.id == response.context['question'].id
+        assert question.question in content
+        assert question.answer in content
+        assert question.category.name in content
+        for label in question.labels.all():
+            assert label.name in response.content.decode()

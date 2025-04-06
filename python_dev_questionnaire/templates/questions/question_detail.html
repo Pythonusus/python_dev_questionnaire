@@ -4,8 +4,24 @@
 {% block content %}
   <div class="container py-5">
     <div class="row justify-content-center">
-      <div class="col-md-8 text-center">
-        <h1 class="display-6 mb-4">This is a question detail!</h1>
+      <div class="text-center">
+        <h1 class="display-6 mb-3 fs-3 fw-semibold">
+          Вопрос с ID {{ question.id }} категории <a href="{% url 'questions_index' %}?category={{ question.category.id }}"
+    class="text-decoration-none">{{ question.category.name }}</a>
+        </h1>
+        <p class="fs-5">
+          {% for label in question.labels.all %}
+            <a href="{% url 'questions_index' %}?label1={{ label.id }}"
+               class="badge text-bg-info text-decoration-none me-3">{{ label.name }}</a>
+          {% empty %}
+            <span class="text-muted">—</span>
+          {% endfor %}
+        </p>
+      </div>
+      <div>
+        <p class="lead mb-4 fs-4">{{ question.question }}</p>
+        <p class="fs-4 fw-semibold">Ответ:</p>
+        <p class="lead mb-4 fs-4">{{ question.answer }}</p>
       </div>
     </div>
   </div>
