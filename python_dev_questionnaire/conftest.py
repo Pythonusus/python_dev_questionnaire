@@ -1,5 +1,5 @@
 """
-Fixtures for pytest.
+Project wide fixtures for pytest.
 """
 
 import pytest
